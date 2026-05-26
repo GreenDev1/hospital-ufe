@@ -87,7 +87,7 @@ componentWillLoad() {
             <md-primary-tab 
               active={activeView === 'priradenie'} 
               onClick={() => this.navigateTo('priradenie')}>
-              Správa priradení (Vedúci)
+              Správa priradení (Vedúci )
             </md-primary-tab>
             
             <md-primary-tab 
