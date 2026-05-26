@@ -50,7 +50,7 @@ jobs:
       uses: docker/metadata-action@v3
       with:
         images: |
-          greendev15/ambulance-ufe
+          greendev15/hospital-ufe
         tags: |
           type=schedule
           type=ref,event=branch
