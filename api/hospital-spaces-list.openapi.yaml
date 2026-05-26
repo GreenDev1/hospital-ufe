@@ -1,0 +1,194 @@
+openapi: 3.0.0
+
+servers:
+  - description: Cluster Endpoint
+    url: /api
+
+info:
+  description: Hospital Spaces management for Web-In-Cloud system
+  version: "1.0.0"
+  title: Hospital Spaces API
+  contact:
+    email: your_email@stuba.sk
+  license:
+    name: CC BY 4.0
+    url: "https://creativecommons.org/licenses/by/4.0/"
+
+tags:
+  - name: hospitalSpacesList
+    description: Hospital Spaces API
+
+paths:
+  "/hospital-spaces/{spaceId}/entries":
+    get:
+      tags:
+        - hospitalSpacesList
+      summary: Provides hospital spaces list
+      operationId: getHospitalSpacesEntries
+      description: Returns list of hospital spaces (filtered by spaceId context if needed)
+      parameters:
+        - in: path
+          name: spaceId
+          description: Identifier of hospital space group (e.g. hospital / pavilion / facility)
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: List of hospital spaces
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HospitalSpace"
+              examples:
+                response:
+                  $ref: "#/components/examples/HospitalSpacesListExample"
+
+        "404":
+          description: Hospital space group not found
+
+components:
+  schemas:
+    HospitalSpace:
+      type: object
+      required:
+        - id
+        - roomNumber
+        - name
+        - type
+        - pavilion
+        - block
+        - floor
+        - areaSquareMeters
+        - status
+        - icon
+
+      properties:
+        id:
+          type: string
+          example: space-001
+          description: Unique identifier of hospital space
+
+        roomNumber:
+          type: string
+          example: "104"
+          description: Room number in hospital building
+
+        name:
+          type: string
+          example: Kardiologická ambulancia
+          description: Name of the hospital space
+
+        type:
+          type: string
+          example: Ambulancia
+          description: Type of space (e.g. ambulance, surgery, department)
+
+        pavilion:
+          type: string
+          example: Pavilón A (Chirurgický)
+          description: Hospital pavilion where space is located
+
+        block:
+          type: string
+          example: A
+          description: Building block identifier
+
+        floor:
+          type: integer
+          format: int32
+          example: 1
+          description: Floor number (0 = ground floor)
+
+        areaSquareMeters:
+          type: integer
+          format: int32
+          example: 25
+          description: Area of the space in square meters
+
+        status:
+          type: string
+          example: V prevádzke
+          description: Operational status of the space
+
+        icon:
+          type: string
+          example: favorite
+          description: Material icon identifier for UI display
+
+  examples:
+    HospitalSpaceExample:
+      summary: Single hospital space example
+      value:
+        id: space-001
+        roomNumber: "104"
+        name: Kardiologická ambulancia
+        type: Ambulancia
+        pavilion: Pavilón A (Chirurgický)
+        block: A
+        floor: 1
+        areaSquareMeters: 25
+        status: V prevádzke
+        icon: favorite
+
+    HospitalSpacesListExample:
+      summary: List of hospital spaces
+      description: Example response containing multiple hospital spaces
+      value:
+        - id: space-001
+          roomNumber: "104"
+          name: Kardiologická ambulancia
+          type: Ambulancia
+          pavilion: Pavilón A (Chirurgický)
+          block: A
+          floor: 1
+          areaSquareMeters: 25
+          status: V prevádzke
+          icon: favorite
+
+        - id: space-002
+          roomNumber: "105"
+          name: Neurologická ambulancia
+          type: Ambulancia
+          pavilion: Pavilón A (Chirurgický)
+          block: A
+          floor: 1
+          areaSquareMeters: 22
+          status: V prevádzke
+          icon: psychology
+
+        - id: space-003
+          roomNumber: "215"
+          name: Operačná sála 3
+          type: Chirurgia
+          pavilion: Pavilón A (Chirurgický)
+          block: A
+          floor: 2
+          areaSquareMeters: 55
+          status: Prebieha údržba
+          icon: healing
+
+        - id: space-004
+          roomNumber: "001"
+          name: Centrálny príjem pacientov
+          type: Oddelenie
+          pavilion: Pavilón B (Detský)
+          block: B
+          floor: 0
+          areaSquareMeters: 120
+          status: V prevádzke
+          icon: login
+
+        - id: space-005
+          roomNumber: "110"
+          name: Pediatrická ambulancia
+          type: Ambulancia
+          pavilion: Pavilón B (Detský)
+          block: B
+          floor: 1
+          areaSquareMeters: 30
+          status: V prevádzke
+          icon: child_care

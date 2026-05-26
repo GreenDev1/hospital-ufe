@@ -1,0 +1,6 @@
+apis/HospitalSpacesListApi.ts
+apis/index.ts
+index.ts
+models/HospitalSpace.ts
+models/index.ts
+runtime.ts

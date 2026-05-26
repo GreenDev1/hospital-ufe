@@ -12,6 +12,8 @@ declare global {
 export class LnHospitalSpacesApp {
   @Prop() basePath: string = "";
   @State() private relativePath = "";
+  @Prop() apiBase: string;
+  @Prop() spaceId: string;
 
 componentWillLoad() {
     const baseUri = new URL(this.basePath, document.baseURI || "/").pathname;
@@ -102,15 +104,27 @@ componentWillLoad() {
         <main style={{ flex: '1', padding: '24px', color: '#1f1f1f' }}>
   
           {activeView === 'evidencia' && (
-            <ln-hospital-spaces-list role="spravca"></ln-hospital-spaces-list>
+            <ln-hospital-spaces-list
+              role="spravca"
+              api-base={this.apiBase}
+              space-id="hospital-01"
+            ></ln-hospital-spaces-list>
           )}
 
           {activeView === 'priradenie' && (
-            <ln-hospital-spaces-list role="veduci"></ln-hospital-spaces-list>
+            <ln-hospital-spaces-list
+              role="veduci"
+              api-base={this.apiBase}
+              space-id="hospital-01"
+            ></ln-hospital-spaces-list>
           )}
 
           {activeView === 'prehlad' && (
-            <ln-hospital-spaces-list role="general"></ln-hospital-spaces-list>
+            <ln-hospital-spaces-list
+              role="general"
+              api-base={this.apiBase}
+              space-id="hospital-01"
+            ></ln-hospital-spaces-list>
           )}
 
         </main>

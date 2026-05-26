@@ -7,9 +7,11 @@
 
 ## Properties
 
-| Property   | Attribute   | Description | Type     | Default |
-| ---------- | ----------- | ----------- | -------- | ------- |
-| `basePath` | `base-path` |             | `string` | `""`    |
+| Property   | Attribute   | Description | Type     | Default     |
+| ---------- | ----------- | ----------- | -------- | ----------- |
+| `apiBase`  | `api-base`  |             | `string` | `undefined` |
+| `basePath` | `base-path` |             | `string` | `""`        |
+| `spaceId`  | `space-id`  |             | `string` | `undefined` |
 
 
 ## Dependencies

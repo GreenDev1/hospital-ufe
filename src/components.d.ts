@@ -7,10 +7,12 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface LnHospitalSpacesApp {
+        "apiBase": string;
         /**
           * @default ""
          */
         "basePath": string;
+        "spaceId": string;
     }
     interface LnHospitalSpacesEdit {
         /**
@@ -31,10 +33,12 @@ export namespace Components {
         "space": any;
     }
     interface LnHospitalSpacesList {
+        "apiBase": string;
         /**
           * @default 'general'
          */
         "role": 'spravca' | 'veduci' | 'general';
+        "spaceId": string;
     }
 }
 export interface LnHospitalSpacesEditCustomEvent<T> extends CustomEvent<T> {
@@ -80,10 +84,12 @@ declare global {
 }
 declare namespace LocalJSX {
     interface LnHospitalSpacesApp {
+        "apiBase"?: string;
         /**
           * @default ""
          */
         "basePath"?: string;
+        "spaceId"?: string;
     }
     interface LnHospitalSpacesEdit {
         /**
@@ -106,14 +112,18 @@ declare namespace LocalJSX {
         "space"?: any;
     }
     interface LnHospitalSpacesList {
+        "apiBase"?: string;
         /**
           * @default 'general'
          */
         "role"?: 'spravca' | 'veduci' | 'general';
+        "spaceId"?: string;
     }
 
     interface LnHospitalSpacesAppAttributes {
         "basePath": string;
+        "apiBase": string;
+        "spaceId": string;
     }
     interface LnHospitalSpacesEditAttributes {
         "opened": boolean;
@@ -121,6 +131,8 @@ declare namespace LocalJSX {
         "space": string;
     }
     interface LnHospitalSpacesListAttributes {
+        "apiBase": string;
+        "spaceId": string;
         "role": 'spravca' | 'veduci' | 'general';
     }
 

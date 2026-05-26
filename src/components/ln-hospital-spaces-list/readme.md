@@ -7,9 +7,11 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                                 | Default     |
-| -------- | --------- | ----------- | ------------------------------------ | ----------- |
-| `role`   | `role`    |             | `"general" \| "spravca" \| "veduci"` | `'general'` |
+| Property  | Attribute  | Description | Type                                 | Default     |
+| --------- | ---------- | ----------- | ------------------------------------ | ----------- |
+| `apiBase` | `api-base` |             | `string`                             | `undefined` |
+| `role`    | `role`     |             | `"general" \| "spravca" \| "veduci"` | `'general'` |
+| `spaceId` | `space-id` |             | `string`                             | `undefined` |
 
 
 ## Dependencies

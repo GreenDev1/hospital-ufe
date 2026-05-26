@@ -1,5 +1,6 @@
 import { Component, State, Prop, h } from '@stencil/core';
-
+import { Configuration, HospitalSpacesListApi, type HospitalSpace } from '../../api/hospital-spaces-list';
+/*
 interface HospitalSpace {
   id: string;
   roomNumber: string;
@@ -11,7 +12,7 @@ interface HospitalSpace {
   areaSquareMeters: number;
   status: string;
   icon: string;
-}
+}*/
 
 @Component({
   tag: 'ln-hospital-spaces-list',
@@ -20,15 +21,51 @@ interface HospitalSpace {
 })
 export class LnHospitalSpacesList {
 
-@Prop() role: 'spravca' | 'veduci' | 'general' = 'general';
+  @Prop() apiBase: string;
+  @Prop() spaceId: string;
+
+  @Prop() role: 'spravca' | 'veduci' | 'general' = 'general';
 
   @State() spaces: HospitalSpace[] = [];
+  @State() errorMessage: string;
+  @State() isLoading: boolean = false;
 
   @State() isEditorOpen: boolean = false;
   @State() spaceToEdit: HospitalSpace | null = null;
 
   async componentWillLoad() {
     this.spaces = await this.getSpacesAsync();
+  }
+
+  private async getSpacesAsync(): Promise<HospitalSpace[]> {
+    this.isLoading = true;
+    this.errorMessage = undefined;
+
+    try {
+      const config = new Configuration({
+        basePath: this.apiBase,
+      });
+
+      const api = new HospitalSpacesListApi(config);
+
+      const response = await api.getHospitalSpacesEntriesRaw({
+        spaceId: this.spaceId,
+      });
+
+      if (response.raw.status < 299) {
+        this.isLoading = false;
+        return await response.value();
+      } else {
+        this.errorMessage =
+          `Cannot retrieve hospital spaces: ${response.raw.statusText}`;
+      }
+    } catch (err: any) {
+      this.errorMessage =
+        `Cannot retrieve hospital spaces: ${err.message || 'unknown error'}`;
+    }
+
+    this.isLoading = false;
+    return [];
   }
 
   private openAddDialog() {
@@ -97,7 +134,7 @@ export class LnHospitalSpacesList {
     return grouped;
   }
 
-  private async getSpacesAsync(): Promise<HospitalSpace[]> {
+  /*private async getSpacesAsync(): Promise<HospitalSpace[]> {
     return await Promise.resolve([
       { id: 'space-001', roomNumber: '104', name: 'Kardiologická ambulancia', type: 'Ambulancia', pavilion: 'Pavilón A (Chirurgický)', block: 'A', floor: 1, areaSquareMeters: 25, status: 'V prevádzke', icon: 'favorite' },
       { id: 'space-002', roomNumber: '105', name: 'Neurologická ambulancia', type: 'Ambulancia', pavilion: 'Pavilón A (Chirurgický)', block: 'A', floor: 1, areaSquareMeters: 22, status: 'V prevádzke', icon: 'psychology' },
@@ -105,7 +142,7 @@ export class LnHospitalSpacesList {
       { id: 'space-004', roomNumber: '001', name: 'Centrálny príjem pacientov', type: 'Oddelenie', pavilion: 'Pavilón B (Detský)', block: 'B', floor: 0, areaSquareMeters: 120, status: 'V prevádzke', icon: 'login' },
       { id: 'space-005', roomNumber: '110', name: 'Pediatrická ambulancia', type: 'Ambulancia', pavilion: 'Pavilón B (Detský)', block: 'B', floor: 1, areaSquareMeters: 30, status: 'V prevádzke', icon: 'child_care' }
     ]);
-  }
+  }*/
 
   private getUniquePavilions(): string[] {
     const pavilions = this.spaces.map(space => space.pavilion);
@@ -118,6 +155,18 @@ export class LnHospitalSpacesList {
     return (
       <div class="spaces-wrapper" style={{ padding: '24px', fontFamily: 'var(--md-sys-typescale-body-large-font, sans-serif)' }}>
         
+        {this.errorMessage && (
+        <div style={{ color: 'red', marginBottom: '16px' }}>
+          {this.errorMessage}
+        </div>
+        )}
+
+        {this.isLoading && (
+        <div style={{ marginBottom: '16px' }}>
+          Načítavam dáta...
+        </div>
+        )}
+
         <div class="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
           <h1 style={{ margin: '0' }}>Správa priestorov nemocnice</h1>
           
