@@ -6,10 +6,66 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface LnHospitalSpacesApp {
+        /**
+          * @default ""
+         */
+        "basePath": string;
+    }
+    interface LnHospitalSpacesEdit {
+        /**
+          * @default []
+         */
+        "existingPavilions": string[];
+        /**
+          * @default false
+         */
+        "opened": boolean;
+        /**
+          * @default 'general'
+         */
+        "role": string;
+        /**
+          * @default {}
+         */
+        "space": any;
+    }
     interface LnHospitalSpacesList {
+        /**
+          * @default 'general'
+         */
+        "role": 'spravca' | 'veduci' | 'general';
     }
 }
+export interface LnHospitalSpacesEditCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLLnHospitalSpacesEditElement;
+}
 declare global {
+    interface HTMLLnHospitalSpacesAppElement extends Components.LnHospitalSpacesApp, HTMLStencilElement {
+    }
+    var HTMLLnHospitalSpacesAppElement: {
+        prototype: HTMLLnHospitalSpacesAppElement;
+        new (): HTMLLnHospitalSpacesAppElement;
+    };
+    interface HTMLLnHospitalSpacesEditElementEventMap {
+        "editor-closed": void;
+        "editor-saved": any;
+    }
+    interface HTMLLnHospitalSpacesEditElement extends Components.LnHospitalSpacesEdit, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLLnHospitalSpacesEditElementEventMap>(type: K, listener: (this: HTMLLnHospitalSpacesEditElement, ev: LnHospitalSpacesEditCustomEvent<HTMLLnHospitalSpacesEditElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLLnHospitalSpacesEditElementEventMap>(type: K, listener: (this: HTMLLnHospitalSpacesEditElement, ev: LnHospitalSpacesEditCustomEvent<HTMLLnHospitalSpacesEditElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLLnHospitalSpacesEditElement: {
+        prototype: HTMLLnHospitalSpacesEditElement;
+        new (): HTMLLnHospitalSpacesEditElement;
+    };
     interface HTMLLnHospitalSpacesListElement extends Components.LnHospitalSpacesList, HTMLStencilElement {
     }
     var HTMLLnHospitalSpacesListElement: {
@@ -17,20 +73,69 @@ declare global {
         new (): HTMLLnHospitalSpacesListElement;
     };
     interface HTMLElementTagNameMap {
+        "ln-hospital-spaces-app": HTMLLnHospitalSpacesAppElement;
+        "ln-hospital-spaces-edit": HTMLLnHospitalSpacesEditElement;
         "ln-hospital-spaces-list": HTMLLnHospitalSpacesListElement;
     }
 }
 declare namespace LocalJSX {
-    interface LnHospitalSpacesList {
+    interface LnHospitalSpacesApp {
+        /**
+          * @default ""
+         */
+        "basePath"?: string;
     }
+    interface LnHospitalSpacesEdit {
+        /**
+          * @default []
+         */
+        "existingPavilions"?: string[];
+        "onEditor-closed"?: (event: LnHospitalSpacesEditCustomEvent<void>) => void;
+        "onEditor-saved"?: (event: LnHospitalSpacesEditCustomEvent<any>) => void;
+        /**
+          * @default false
+         */
+        "opened"?: boolean;
+        /**
+          * @default 'general'
+         */
+        "role"?: string;
+        /**
+          * @default {}
+         */
+        "space"?: any;
+    }
+    interface LnHospitalSpacesList {
+        /**
+          * @default 'general'
+         */
+        "role"?: 'spravca' | 'veduci' | 'general';
+    }
+
+    interface LnHospitalSpacesAppAttributes {
+        "basePath": string;
+    }
+    interface LnHospitalSpacesEditAttributes {
+        "opened": boolean;
+        "role": string;
+        "space": string;
+    }
+    interface LnHospitalSpacesListAttributes {
+        "role": 'spravca' | 'veduci' | 'general';
+    }
+
     interface IntrinsicElements {
-        "ln-hospital-spaces-list": LnHospitalSpacesList;
+        "ln-hospital-spaces-app": Omit<LnHospitalSpacesApp, keyof LnHospitalSpacesAppAttributes> & { [K in keyof LnHospitalSpacesApp & keyof LnHospitalSpacesAppAttributes]?: LnHospitalSpacesApp[K] } & { [K in keyof LnHospitalSpacesApp & keyof LnHospitalSpacesAppAttributes as `attr:${K}`]?: LnHospitalSpacesAppAttributes[K] } & { [K in keyof LnHospitalSpacesApp & keyof LnHospitalSpacesAppAttributes as `prop:${K}`]?: LnHospitalSpacesApp[K] };
+        "ln-hospital-spaces-edit": Omit<LnHospitalSpacesEdit, keyof LnHospitalSpacesEditAttributes> & { [K in keyof LnHospitalSpacesEdit & keyof LnHospitalSpacesEditAttributes]?: LnHospitalSpacesEdit[K] } & { [K in keyof LnHospitalSpacesEdit & keyof LnHospitalSpacesEditAttributes as `attr:${K}`]?: LnHospitalSpacesEditAttributes[K] } & { [K in keyof LnHospitalSpacesEdit & keyof LnHospitalSpacesEditAttributes as `prop:${K}`]?: LnHospitalSpacesEdit[K] };
+        "ln-hospital-spaces-list": Omit<LnHospitalSpacesList, keyof LnHospitalSpacesListAttributes> & { [K in keyof LnHospitalSpacesList & keyof LnHospitalSpacesListAttributes]?: LnHospitalSpacesList[K] } & { [K in keyof LnHospitalSpacesList & keyof LnHospitalSpacesListAttributes as `attr:${K}`]?: LnHospitalSpacesListAttributes[K] } & { [K in keyof LnHospitalSpacesList & keyof LnHospitalSpacesListAttributes as `prop:${K}`]?: LnHospitalSpacesList[K] };
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "ln-hospital-spaces-app": LocalJSX.IntrinsicElements["ln-hospital-spaces-app"] & JSXBase.HTMLAttributes<HTMLLnHospitalSpacesAppElement>;
+            "ln-hospital-spaces-edit": LocalJSX.IntrinsicElements["ln-hospital-spaces-edit"] & JSXBase.HTMLAttributes<HTMLLnHospitalSpacesEditElement>;
             "ln-hospital-spaces-list": LocalJSX.IntrinsicElements["ln-hospital-spaces-list"] & JSXBase.HTMLAttributes<HTMLLnHospitalSpacesListElement>;
         }
     }
